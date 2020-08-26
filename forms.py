@@ -1,11 +1,77 @@
 from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms import (
+    StringField, 
+    SelectField, 
+    SelectMultipleField, 
+    DateTimeField,
+    BooleanField,
+    TextField
+)
+from wtforms.validators import (
+    DataRequired,
+    AnyOf, 
+    URL,
+    Length
+)
 
-genres = [
-    'Alternative','Blues','Classical','Country','Electronic','Folk','Hip-Hop','Heavy Metal', 'Instrumental',
-    'Jazz', 'Musical Theatre', 'Pop', 'Punk','R&B', 'Reggae', 'Rock n Roll', 'Soul', 'Other'
+# genres = [
+#     'Alternative','Blues','Classical','Country','Electronic','Folk','Hip-Hop','Heavy Metal', 'Instrumental',
+#     'Jazz', 'Musical Theatre', 'Pop', 'Punk','R&B', 'Reggae', 'Rock n Roll', 'Soul', 'Other'
+# ]
+
+states = [
+    'AL',
+    'AK',
+    'AZ',
+    'AR',
+    'CA',
+    'CO',
+    'CT',
+    'DE',
+    'DC',
+    'FL',
+    'GA',
+    'HI',
+    'ID',
+    'IL',
+    'IN',
+    'IA',
+    'KS',
+    'KY',
+    'LA',
+    'ME',
+    'MT',
+    'NE',
+    'NV',
+    'NH',
+    'NJ',
+    'NM',
+    'NY',
+    'NC',
+    'ND',
+    'OH',
+    'OK',
+    'OR',
+    'MD',
+    'MA',
+    'MI',
+    'MN',
+    'MS',
+    'MO',
+    'PA',
+    'RI',
+    'SC',
+    'SD',
+    'TN',
+    'TX',
+    'UT',
+    'VT',
+    'VA',
+    'WA',
+    'WV',
+    'WI',
+    'WY'
 ]
 
 
@@ -30,7 +96,7 @@ class VenueForm(Form):
         'city', validators=[DataRequired()]
     )
     state = SelectField(
-        'state', validators=[DataRequired()],
+        'state', validators=[DataRequired(), AnyOf(states)],
         choices=[
             ('AL', 'AL'),
             ('AK', 'AK'),
@@ -91,12 +157,12 @@ class VenueForm(Form):
     phone = StringField(
         'phone'
     )
-    image_link = StringField(
-        'image_link'
-    )
+    # image_link = StringField(
+    #     'image_link'
+    # )
     genres = SelectMultipleField(
         # TODO implement enum restriction
-        'genres', validators=[DataRequired(), AnyOf(genres)],
+        'genres', validators=[DataRequired()],
         choices=[
             ('Alternative', 'Alternative'),
             ('Blues', 'Blues'),
@@ -122,6 +188,18 @@ class VenueForm(Form):
     facebook_link = StringField(
         'facebook_link', validators=[URL()]
     )
+    image_link = StringField(
+        'image_link', validators=[URL()]
+    )
+    website = StringField(
+        'website', validators=[URL()]
+    )
+    seeking_talent = BooleanField(
+        'seeking_talent'
+    )
+    seeking_description = TextField(
+        'seeking_description', validators=[]
+    )
 
 class ArtistForm(Form):
     name = StringField(
@@ -131,7 +209,7 @@ class ArtistForm(Form):
         'city', validators=[DataRequired()]
     )
     state = SelectField(
-        'state', validators=[DataRequired()],
+        'state', validators=[DataRequired(), AnyOf(states)],
         choices=[
             ('AL', 'AL'),
             ('AK', 'AK'),
@@ -187,15 +265,14 @@ class ArtistForm(Form):
         ]
     )
     phone = StringField(
-        # TODO implement validation logic for state
         'phone'
     )
-    image_link = StringField(
-        'image_link'
-    )
+    # image_link = StringField(
+    #     'image_link'
+    # )
     genres = SelectMultipleField(
         # TODO implement enum restriction
-        'genres', validators=[DataRequired(), AnyOf(genres)],
+        'genres', validators=[DataRequired()],
         choices=[
             ('Alternative', 'Alternative'),
             ('Blues', 'Blues'),
@@ -222,5 +299,15 @@ class ArtistForm(Form):
         # TODO implement enum restriction
         'facebook_link', validators=[URL()]
     )
-
-# TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
+    image_link = StringField(
+        'image_link', validators=[URL()]
+    )
+    website = StringField(
+        'website', validators=[URL()]
+    )
+    seeking_venue = BooleanField(
+        'seeking_venue'
+    )
+    seeking_description = TextField(
+        'seeking_description', validators=[]
+    )
